@@ -1,0 +1,52 @@
+/*
+Theme Name: ComingSoon
+Theme URI: http://yewtreeweb.co.uk/wordpress-themes/soon
+Author: Mathew Teague - YewTree Web
+Author URI: http://yewtreeweb.co.uk
+Description: A Wordpress theme created from the ground up by Mathew Teague using Sass, Bourbon, Neat and Bitters
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: sass, boourbon, neat, bitters, responsive, sidebar, clean, customizeable, custom-header, custom-menu, editor-style, featured-images
+Text Domain: comingsoon
+*/
+
+/*
+1 - Assets
+    - Bourbon, Neat, Bitters
+    - WordPress Core
+    - Font-awesome
+2 - Custom Assets
+    - Custom Mixins
+    - Custom Variables
+    - Header
+    - Footer
+    - wpadminbar
+3 - Pages
+    - Homepage
+*/
+
+
+/*------------------------------------
+
+1 - Assets
+
+------------------------------------*/
+
+@import "core-assets/assets";
+
+/*------------------------------------
+
+2 - Custom Assets
+
+------------------------------------*/
+
+@import "custom-assets/custom-assets";
+
+/*------------------------------------
+
+3 - Pages
+
+------------------------------------*/
+
+@import "pages/pages";
