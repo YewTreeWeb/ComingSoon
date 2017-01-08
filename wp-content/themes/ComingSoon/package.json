@@ -1,0 +1,46 @@
+{
+  "name": "comingsoon",
+  "version": "1.0.0",
+  "description": "WordPress theme created with Sass and npm installed",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://git@github.com:YewTreeWeb/ComingSoon.git"
+  },
+  "keywords": [
+    "boostrap",
+    "wordpress",
+    "sass",
+    "responsive"
+  ],
+  "author": "Mathew Teague",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YewTreeWeb/ComingSoon/issues"
+  },
+  "homepage": "https://github.com/YewTreeWeb/ComingSoon#readme",
+  "devDependencies": {
+    "@aquafadas/gulp-php-minify": "^0.3.1",
+    "bower": "^1.7.9",
+    "browser-sync": "^2.16.1",
+    "del": "^2.2.2",
+    "flightplan": "^0.6.14",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-changed": "^1.3.2",
+    "gulp-clean-css": "^2.3.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^3.0.3",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0"
+  }
+}
