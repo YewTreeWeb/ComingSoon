@@ -22,17 +22,6 @@ if (typeof jQuery === 'undefined') { throw new Error('myscript\'s JavaScript req
       });
     });
 
-    /*-- images respinsive --*/
-    $(function(){
-        $("img").addClass("img-responsive");
-    });
-
-    /*-- iframe responsive --*/
-    $(function(){
-      $("iframe").addClass("embed-responsive-item");
-      $("iframe").parent().addClass('embed-responsive embed-responsive-16by9');
-    });
-
     /*-- wp admin toolbar --*/
     $(function(){
       if( ($('#wpadminbar').length > 0 ) && ( window.location.href.indexOf( 'wp-admin' ) === 0 ) ) {
@@ -48,8 +37,19 @@ if (typeof jQuery === 'undefined') { throw new Error('myscript\'s JavaScript req
     });
 
     /*--------------------------------
-      Extra Scripts
+      Bootstrap Scripts
     --------------------------------*/
+
+    /*-- images respinsive --*/
+    $(function(){
+        $("img").addClass("img-responsive");
+    });
+
+    /*-- iframe responsive --*/
+    $(function(){
+      $("iframe").addClass("embed-responsive-item");
+      $("iframe").parent().addClass('embed-responsive embed-responsive-16by9');
+    });
 
     /*-- bootstrap carousel settings --*/
 
@@ -77,7 +77,6 @@ if (typeof jQuery === 'undefined') { throw new Error('myscript\'s JavaScript req
       });
 
     });
-
 
 
 }(jQuery);

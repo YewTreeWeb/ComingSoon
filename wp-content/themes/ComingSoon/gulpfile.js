@@ -1,33 +1,3 @@
-/*-------------------
-Config
--------------------*/
-//jsConcat = put all the js files in order to  be merge into one.
-//cssConcat = put all style files in order to  be merge into one.
-//buildRemove = put all files you want removed when building.
-var config = {
-  jsConcat: [
-    'bower_components/jquery/dist/jquery.min.js',
-    'bower_components/jquery-migrate/jquery-migrate.min.js',
-    'bower_components/bootstrap/dist/js/bootstrap.min.js',
-    'js/min/core/main.min.js',
-    'js/min/devlop.min.js'
-  ],
-  cssConcat: [
-    'css/**/*.min.css'
-  ],
-  buildRemove: [
-    'build/scss/',
-    'build/*.js',
-    'build/js/!(*.min.js)',
-    'build/css/!(*.min.css)',
-    'build/*.json',
-    'build/bower_components/',
-    'build/node_modules/',
-    'build/**/maps/',
-    'build/*.codekit'
-  ]
-};
-
 /*---------------
 Required
 ---------------*/
@@ -59,6 +29,36 @@ del = require('del'),
 browserSync = require('browser-sync'),
 reload = browserSync.reload;
 
+/*-------------------
+Config
+-------------------*/
+//jsConcat = put all the js files in order to  be merge into one.
+//cssConcat = put all style files in order to  be merge into one.
+//buildRemove = put all files you want removed when building.
+var config = {
+  jsConcat: [
+    'bower_components/jquery/dist/jquery.min.js',
+    'bower_components/jquery-migrate/jquery-migrate.min.js',
+    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+    'js/min/core/main.min.js',
+    'js/min/devlop.min.js'
+  ],
+  cssConcat: [
+    'css/**/*.min.css'
+  ],
+  buildRemove: [
+    'build/scss/',
+    'build/*.js',
+    'build/js/!(*.min.js)',
+    'build/css/!(*.min.css)',
+    'build/*.json',
+    'build/bower_components/',
+    'build/node_modules/',
+    'build/**/maps/',
+    'build/*.codekit'
+  ]
+};
+
 /*---------------
 Error notification
 ---------------*/
@@ -76,12 +76,32 @@ function handleErrors() {
 }
 
 /*---------------
-Scripts
+Styles
 ---------------*/
-gulp.task('scripts', function(){
-  gulp.src( ['js/**/*.js','!js/**/*.min.js'] )
+gulp.task('sass', function(){
+  return gulp.src( 'scss/*.scss' )
+
   .pipe( plumber() )
   .pipe( sourcemaps.init() )
+  .pipe( sass({
+    outputStyle: 'nested',
+  }).on('error', handleErrors) )
+  .pipe( autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }) )
+  .pipe( sourcemaps.write('maps') )
+  .pipe( gulp.dest('./') )
+  .pipe( reload({ stream:true }) );
+
+});
+
+/*---------------
+Scripts
+---------------*/
+gulp.task('js', function(){
+  gulp.src( ['js/**/*.js','!js/**/*.min.js'] )
+
+  .pipe( plumber() )
+  .pipe( sourcemaps.init() )
+  //.pipe( changed('js').on('error', handleErrors) )
   .pipe( babel().on('error', handleErrors) )
   .pipe( uglify().on('error', handleErrors) )
   .pipe( sourcemaps.write('maps') )
@@ -91,25 +111,8 @@ gulp.task('scripts', function(){
 
 });
 
-/*---------------
-Styles
----------------*/
-gulp.task('styles', function(){
-  return gulp.src( 'scss/style.scss' )
-  .pipe( plumber() )
-  .pipe( sourcemaps.init() )
-  .pipe( sass({
-    outputStyle: 'nested',
-  }).on('error', handleErrors) )
-  .pipe( autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }) )
-  .pipe( sourcemaps.write('maps') )
-  .pipe( gulp.dest('css') )
-  .pipe( gulp.dest('/') )
-  .pipe( reload({ stream:true }) );
-
-});
-
 gulp.task('css', function(){
+
   return gulp.src( ['css/**/*.css', '!css/**/*.min.css'] )
   .pipe( plumber() )
   .pipe( sourcemaps.init() )
@@ -126,14 +129,14 @@ gulp.task('css', function(){
 Images
 ---------------*/
 gulp.task('images', function() {
-  return gulp.src( ['images/**/*.{png,jpg,jpeg,svg,gif}','!images/min/*.{png,jpg,jpeg,svg,gif}'] )
+  return gulp.src( ['images/**/*.{png,jpg,jpeg,svg,gif}','!images/min/*'] )
   .pipe( plumber() )
-  .pipe( changed('images/min').on('error', handleErrors) )
-  .pipe( cache( imagemin({
+  .pipe( changed('images').on('error', handleErrors) )
+  .pipe( imagemin({
     progressive: true,
     interlaced: true,
     svgoPlugins: [{cleanupIDs: false}]
-  }) ).on('error', handleErrors) )
+  }).on('error', handleErrors) )
   .pipe( gulp.dest('images/min') );
 
 });
@@ -192,7 +195,7 @@ gulp.task('browser-sync', function(){
   browserSync.init({
 
     server:{
-      baseDir: './'
+      baseDir: 'localhost/git/ComingSoon'
     }
 
   });
@@ -202,27 +205,28 @@ gulp.task('build:serve', function(){
   browserSync.init({
 
     server:{
-      baseDir: './build/'
+      baseDir: 'localhost/git/ComingSoon/wp-contents/themes/ComingSoon/build'
     }
 
   });
 
 });
 
+
 /*---------------
 Watch
 ---------------*/
 gulp.task('watch', function(){
 
-  gulp.watch( 'js/**/*.js', ['scripts'] );
-  gulp.watch( 'scss/**/*.{scss,sass}', ['styles'] );
+  gulp.watch( 'scss/**/*.scss', ['sass'] );
   gulp.watch( 'css/**/*.css', ['css'] );
+  gulp.watch( 'js/**/*.js', ['js'] );
   gulp.watch( './**/*.php', reload );
-  gulp.watch( 'images/**/*', ['img']);
+  gulp.watch( 'images/**/*', ['images'] );
 
 });
 
 /*---------------
 Default
 ---------------*/
-gulp.task( 'default', ['watch', 'browser-sync'] );
+gulp.task( 'default', ['watch','browser-sync'] );
